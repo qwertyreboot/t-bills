@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": "warn",
     "react/prop-types": "off",
+    "no-unsafe-optional-chaining": "off",
   },
 };

@@ -1,3 +1,4 @@
+import CustomerDetails from "../components/CustomerDetails";
 import Modal from "../components/Modal";
 import MultiStepForm from "../components/MultiStepForm";
 import ProductAdder from "../components/ProductAdder";
@@ -52,7 +53,10 @@ export default function BillPage() {
         onClose={() => setIsCreateBillModalOpen(false)}
       >
         <MultiStepForm
-          steps={[<ProductAdder />, <>step 2</>, <>step 3</>, <>step 4</>]}
+          steps={[
+            <ProductAdder key="product-adder" />,
+            <CustomerDetails key="customer-details" />,
+          ]}
         />
       </Modal>
     </>
