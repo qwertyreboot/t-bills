@@ -17,4 +17,12 @@ const verifyJwt = (req, res, next) => {
   });
 };
 
-module.exports = { verifyJwt };
+const ownerOnly = (req, res, next) => {
+  if (req.user.role !== "owner") {
+    return res.status(403).json({ message: "Not Permitted" });
+  }
+
+  next();
+};
+
+module.exports = { verifyJwt, ownerOnly };
