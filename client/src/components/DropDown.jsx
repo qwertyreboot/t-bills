@@ -39,7 +39,7 @@ const Dropdown = ({
           handleOnSearchChange(e.target.value);
           onSearchChange?.(e.target.value);
         }}
-        className="appearance-none h-10 block w-full border border-gray-400 rounded py-2 px-4 text-sm bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-white focus:ring-primary-500"
+        className="appearance-none h-10 block w-full border border-gray-400 rounded py-2 px-4 text-sm hover:bg-gray-50 focus:outline-none focus:bg-white focus:ring-primary-500"
       />
       <div
         hidden={!showDropdown}
