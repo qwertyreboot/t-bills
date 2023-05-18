@@ -1,12 +1,26 @@
-import CustomerDetails from "../components/CustomerDetails";
+import BillCreateForm from "../components/BillCreateForm";
 import Modal from "../components/Modal";
-import MultiStepForm from "../components/MultiStepForm";
-import ProductAdder from "../components/ProductAdder";
 import Table from "../components/Table";
+import { request } from "../utils";
+import { useEffect } from "react";
 import { useState } from "react";
 
 export default function BillPage() {
   const [isCreateBillModalOpen, setIsCreateBillModalOpen] = useState(false);
+  const [bills, setBills] = useState([]);
+
+  useEffect(() => {
+    const fetchBills = async () => {
+      const response = await request("/api/bills");
+
+      if (response.length) {
+        setBills(response);
+      }
+    };
+
+    fetchBills();
+  });
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -52,12 +66,7 @@ export default function BillPage() {
         isOpen={isCreateBillModalOpen}
         onClose={() => setIsCreateBillModalOpen(false)}
       >
-        <MultiStepForm
-          steps={[
-            <ProductAdder key="product-adder" />,
-            <CustomerDetails key="customer-details" />,
-          ]}
-        />
+        <BillCreateForm />
       </Modal>
     </>
   );

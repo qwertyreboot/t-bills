@@ -1,6 +1,7 @@
 import Modal from "../components/Modal";
 import ProductCreateForm from "../components/ProductCreateForm";
 import Table from "../components/Table";
+import { request } from "../utils";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -11,14 +12,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await (
-        await fetch("http://localhost:3000/api/products", {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhdmluIiwicGhvbmUiOiI3ODk0NTYxMjMzIiwiaWQiOiI2NDYzYjUzOWExNjYyYTRjYjMyNTg3ZDQiLCJpYXQiOjE2ODQzMDE1NDV9.M09FgtluNZn5TGQoRdqbg_bg0Wyz4UrlU2XjZ0Unsj0",
-          },
-        })
-      ).json();
+      const response = await request("/api/products");
 
       if (response.length) {
         setProducts(response);
@@ -26,7 +20,7 @@ export default function ProductPage() {
     };
 
     fetchProducts();
-  }, []);
+  }, [isCreateProductModalOpen]);
 
   return (
     <>

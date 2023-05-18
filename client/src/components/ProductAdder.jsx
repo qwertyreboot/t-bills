@@ -1,5 +1,5 @@
 import Dropdown from "./DropDown";
-import { useState } from "react";
+import { request } from "../utils";
 
 function Row({ onProductChange, onQuantityChange, product, quantity }) {
   return (
@@ -7,9 +7,12 @@ function Row({ onProductChange, onQuantityChange, product, quantity }) {
       <Dropdown
         limit={5}
         className="w-full"
-        options={["onions", "carrots", "beetroots", "onions", "carrots"]}
-        initialSearchText={product}
-        onSelectionChange={onProductChange}
+        fetchOptions={async (searchText) =>
+          await request(`/api/products?search=${searchText}`)
+        }
+        label={(item) => item.name}
+        initialSearchText={product?.name}
+        onSelectionChange={(item) => onProductChange(item)}
       />
       <div className="relative">
         <input
@@ -18,39 +21,40 @@ function Row({ onProductChange, onQuantityChange, product, quantity }) {
           value={quantity}
           onChange={(e) => onQuantityChange(e.target.value)}
         />
-        <span className="absolute right-1 top-1.5 p-1.5 text-xs bg-gray-500 text-white rounded ">
-          gram
-        </span>
+        {product && (
+          <span className="absolute right-1 top-1.5 p-1.5 text-xs bg-gray-500 text-white rounded">
+            {product.quantity.unit}
+          </span>
+        )}
       </div>
     </div>
   );
 }
 
-export default function ProductAdder() {
-  const [rows, setRows] = useState([]);
+export default function ProductAdder({ products, setProducts }) {
   return (
     <div>
       <div className="flex flex-col gap-2">
-        {rows.map((row, i) => (
+        {products.map((row, i) => (
           <Row
             key={i}
             {...row}
             onProductChange={(product) => {
-              const newRows = [...rows];
+              const newRows = [...products];
               newRows[i].product = product;
-              setRows(newRows);
+              setProducts(newRows);
             }}
             onQuantityChange={(quantity) => {
-              const newRows = [...rows];
+              const newRows = [...products];
               newRows[i].quantity = quantity;
-              setRows(newRows);
+              setProducts(newRows);
             }}
           />
         ))}
       </div>
       <div
         onClick={() =>
-          setRows((prev) => [...prev, { product: null, quantity: 0 }])
+          setProducts((prev) => [...prev, { product: null, quantity: 0 }])
         }
         className="m-1 mt-4 rounded-md shadow-sm bg-gray-200"
       >

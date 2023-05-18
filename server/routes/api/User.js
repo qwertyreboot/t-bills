@@ -1,5 +1,5 @@
 const express = require("express");
-
+const bcrypt = require("bcrypt");
 const User = require("../../schemas/User");
 
 const router = express.Router();
@@ -26,7 +26,8 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const user = await User.create({ ...req.body });
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    const user = await User.create({ ...req.body, password: hashedPassword });
     res.json(user);
   } catch (error) {
     res.status(400).json({ message: error.message || error });

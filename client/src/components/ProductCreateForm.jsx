@@ -1,5 +1,6 @@
 import Dropdown from "./DropDown";
 import Toggle from "./Toggle";
+import { request } from "../utils";
 import { useState } from "react";
 
 const initialProductState = {
@@ -153,17 +154,10 @@ export default function ProductCreateForm({ onClose }) {
       <div className="flex flex-row-reverse gap-3 items-center justify-start">
         <button
           onClick={async () => {
-            const response = await (
-              await fetch("http://localhost:3000/api/products", {
-                method: "POST",
-                body: JSON.stringify(product),
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization:
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhdmluIiwicGhvbmUiOiI3ODk0NTYxMjMzIiwiaWQiOiI2NDYzYjUzOWExNjYyYTRjYjMyNTg3ZDQiLCJpYXQiOjE2ODQzMDE1NDV9.M09FgtluNZn5TGQoRdqbg_bg0Wyz4UrlU2XjZ0Unsj0",
-                },
-              })
-            ).json();
+            const response = await request("/api/products", {
+              method: "POST",
+              body: product,
+            });
 
             if (response._id) {
               setProduct(initialProductState);
