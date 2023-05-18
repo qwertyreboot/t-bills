@@ -1,8 +1,9 @@
 import Table from "./Table";
 import Toggle from "./Toggle";
+import { request } from "../utils";
 import { useState } from "react";
 
-export default function FinalBillForm({ products: items, customer }) {
+export default function FinalBillForm({ products: items, customer, onClose }) {
   const [discount, setDiscount] = useState({ value: 0, unit: "amount" });
 
   const totalBeforeDiscount = () =>
@@ -56,6 +57,32 @@ export default function FinalBillForm({ products: items, customer }) {
         <h2 className="text-3xl font-bold text-gray-600">
           {totalAfterDiscount()}
         </h2>
+      </div>
+
+      <div className="flex items-center justify-end my-4">
+        <button
+          onClick={async () => {
+            const response = await request("/api/bills", {
+              method: "POST",
+              body: {
+                items: items.map((item) => ({
+                  product: item?.product?._id,
+                  quantity: item?.quantity,
+                })),
+                discount,
+                customer: customer?._id,
+              },
+            });
+
+            console.log(response);
+            if (response._id) {
+              onClose();
+            }
+          }}
+          className="px-4 py-2 rounded shadow-sm cursor-pointer bg-blue-400 text-white"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

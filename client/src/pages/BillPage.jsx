@@ -19,7 +19,7 @@ export default function BillPage() {
     };
 
     fetchBills();
-  });
+  }, [isCreateBillModalOpen]);
 
   return (
     <>
@@ -34,39 +34,24 @@ export default function BillPage() {
 
       <Table
         className="mt-6"
-        head={["NAME", "TITLE", "EMAIL", "ROLE"]}
-        rows={[
-          [
-            "Khavin Shankar",
-            "Full Stack Dev",
-            "khavinshankar@gmail.com",
-            "Full Stack Dev",
-          ],
-          [
-            "Khavin Shankar",
-            "Full Stack Dev",
-            "khavinshankar@gmail.com",
-            "Full Stack Dev",
-          ],
-          [
-            "Khavin Shankar",
-            "Full Stack Dev",
-            "khavinshankar@gmail.com",
-            "Full Stack Dev",
-          ],
-          [
-            "Khavin Shankar",
-            "Full Stack Dev",
-            "khavinshankar@gmail.com",
-            "Full Stack Dev",
-          ],
-        ]}
+        head={["ID", "Number of Products", ""]}
+        rows={bills.map((bill) => [
+          bill?._id,
+          bill?.items?.length,
+          <a
+            key={bill?._id}
+            className="cursor-pointer text-blue-400 hover:text-blue-700"
+            href={`/bills/${bill?._id}`}
+          >
+            view
+          </a>,
+        ])}
       />
       <Modal
         isOpen={isCreateBillModalOpen}
         onClose={() => setIsCreateBillModalOpen(false)}
       >
-        <BillCreateForm />
+        <BillCreateForm onClose={() => setIsCreateBillModalOpen(false)} />
       </Modal>
     </>
   );

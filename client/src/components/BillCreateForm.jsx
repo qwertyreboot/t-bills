@@ -4,7 +4,7 @@ import MultiStepForm from "../components/MultiStepForm";
 import ProductAdder from "../components/ProductAdder";
 import { useState } from "react";
 
-export default function BillCreateForm() {
+export default function BillCreateForm({ onClose }) {
   const [products, setProducts] = useState([]);
   const [customer, setCustomer] = useState(null);
 
@@ -25,6 +25,11 @@ export default function BillCreateForm() {
           key="final-bill-form"
           products={products}
           customer={customer}
+          onClose={() => {
+            onClose();
+            setProducts([]);
+            setCustomer(null);
+          }}
         />,
       ]}
     />

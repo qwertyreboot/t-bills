@@ -1,5 +1,30 @@
 {
-  "dependencies": {
-    "axios": "^1.4.0"
-  }
+  "name": "t-bills",
+  "version": "1.0.0",
+  "description": "Billing application for local shops",
+  "main": "index.js",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  },
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install": "npm install --workspaces",
+    "server": "npm run dev --workspace server",
+    "client": "npm run dev --workspace client",
+    "dev": "concurrently 'npm run server' 'npm run client'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qwertyreboot/t-bills.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qwertyreboot/t-bills/issues"
+  },
+  "homepage": "https://github.com/qwertyreboot/t-bills#readme"
 }

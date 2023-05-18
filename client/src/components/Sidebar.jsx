@@ -7,6 +7,7 @@ import {
 } from "react-icons/tb";
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
 import { classNames } from "../utils";
 
 export default function Sidebar({ onChangeSize }) {
@@ -29,19 +30,19 @@ export default function Sidebar({ onChangeSize }) {
         <div className="h-full sm:px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="/bills"
+              <Link
+                to="/bills"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <TbNotes size={25} />
                 {isMaximized && (
                   <span className="flex-1 ml-3 whitespace-nowrap">Bills</span>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/products"
+              <Link
+                to="/products"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <TbShoppingCart size={25} />
@@ -50,18 +51,18 @@ export default function Sidebar({ onChangeSize }) {
                     Products
                   </span>
                 )}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/users"
+              <Link
+                to="/users"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <TbUser size={25} />
                 {isMaximized && (
                   <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
                 )}
-              </a>
+              </Link>
             </li>
           </ul>
 

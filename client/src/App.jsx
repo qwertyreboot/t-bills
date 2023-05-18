@@ -2,10 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import BillPage from "./pages/BillPage";
+import OwnerOnly from "./components/OnwerOnly";
 import ProductPage from "./pages/ProductPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 import SigninPage from "./pages/SigninPage";
 import UserPage from "./pages/UserPage";
+import ViewBillPage from "./pages/ViewBillPage";
 import { classNames } from "./utils";
 import { useState } from "react";
 
@@ -26,31 +29,45 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/bills"
-            element={
-              <PageWithSidebar>
-                <BillPage />
-              </PageWithSidebar>
-            }
-          />
-          <Route
-            path="/products"
-            element={
-              <PageWithSidebar>
-                <ProductPage />
-              </PageWithSidebar>
-            }
-          />
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route
+              path="/bills"
+              exact
+              element={
+                <PageWithSidebar>
+                  <BillPage />
+                </PageWithSidebar>
+              }
+            />
+            <Route
+              path="/bills/:id"
+              element={
+                <PageWithSidebar>
+                  <ViewBillPage />
+                </PageWithSidebar>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <PageWithSidebar>
+                  <ProductPage />
+                </PageWithSidebar>
+              }
+            />
+          </Route>
+
           <Route path="/signin" element={<SigninPage />} />
-          <Route
-            path="/users"
-            element={
-              <PageWithSidebar>
-                <UserPage />
-              </PageWithSidebar>
-            }
-          />
+          <Route path="/" element={<OwnerOnly />}>
+            <Route
+              path="/users"
+              element={
+                <PageWithSidebar>
+                  <UserPage />
+                </PageWithSidebar>
+              }
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

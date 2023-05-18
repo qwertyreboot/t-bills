@@ -9,7 +9,7 @@ export const request = async (
   const accessToken = JSON.parse(localStorage.getItem("user") ?? "{}")?.token;
 
   return await (
-    await fetch(`http://localhost:3000${endpoint}`, {
+    await fetch(`http://localhost:4000${endpoint}`, {
       method,
       body: method === "GET" ? null : JSON.stringify(body),
       headers: {

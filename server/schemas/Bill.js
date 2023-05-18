@@ -26,7 +26,7 @@ const schema = new mongoose.Schema(
         unit: "percentage",
       },
     },
-    Customer: {
+    customer: {
       type: mongoose.Types.ObjectId,
       ref: "Customer",
     },

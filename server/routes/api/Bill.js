@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
     const bill = await Bill.findOne({
       createdBy: req.user.id,
       _id: req.params.id,
-    });
+    }).populate("items.product customer");
     res.json(bill);
   } catch (error) {
     res.status(400).json({ message: error.message || error });
